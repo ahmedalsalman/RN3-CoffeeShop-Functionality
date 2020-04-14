@@ -1,8 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 
 // NativeBase Components
 import { Text, Left, Body, Right, Button, ListItem, Icon } from "native-base";
 
+import removeItemFromCart from "../../redux/actions"
 // Style
 import styles from "./styles";
 
@@ -18,11 +20,15 @@ const CartItem = ({ item }) => (
       <Text style={styles.quantity}>{item.quantity}</Text>
     </Body>
     <Right>
-      <Button transparent>
+      <Button transparent onPress={() => removeItem(item)}>
         <Icon name="trash" style={styles.removeItem} />
       </Button>
     </Right>
   </ListItem>
 );
 
-export default CartItem;
+const mapDispatchToProps = dispatch => ({
+  removeItem: (item) => dispatch(removeItemFromCart(item))
+})
+
+export default connect(null, mapDispatchToProps)(CartItem);
